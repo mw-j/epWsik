@@ -11,7 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\DataAccess\epDataAccess.csproj" />
+    <ProjectReference Include="..\epDataAccess\epDataAccess.csproj" />
   </ItemGroup>
 
 </Project>

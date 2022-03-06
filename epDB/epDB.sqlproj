@@ -69,7 +69,7 @@
     <Build Include="dbo\StoredProcedures\sp_User_Update.sql" />
   </ItemGroup>
   <ItemGroup>
-    <PostDeploy Include="Script.PostDeployment1.sql" />
+    <PostDeploy Include="Script.PostDeployment.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="epDB.publish.xml" />

@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "epAPI", "epAPI\epAPI.csproj
 EndProject
 Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "epDB", "epDB\epDB.sqlproj", "{344CC783-7F90-47F8-B594-C2A362B265B7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "epDataAccess", "DataAccess\epDataAccess.csproj", "{435F0718-453D-4F49-BD71-AA7FE0EABDC8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "epDataAccess", "epDataAccess\epDataAccess.csproj", "{435F0718-453D-4F49-BD71-AA7FE0EABDC8}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{1A5A8136-D05C-4049-A0EA-1F6A8C57099C}"
 	ProjectSection(SolutionItems) = preProject
