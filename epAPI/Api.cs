@@ -1,86 +1,22 @@
-﻿namespace epAPI;
+﻿using epAPI.APIs;
+
+namespace epAPI;
 
 public static class Api
 {
     public static void ConfigureApi(this WebApplication app) 
     {
-
-        // All APIs
-        app.MapGet("/Users", GetUsers);
-        app.MapGet("/User/{userId}", GetUser);
-        app.MapPost("/Users", InsertUser);
-        app.MapPut("/Users", UpdateUser);
-        app.MapDelete("/Users", DeleteUser);
-    }
-
-    private static async Task<IResult> GetUsers(IUserData data)
-    {
-        try
-        {
-            return Results.Ok(await data.GetUsers());
-        }
-        catch (Exception ex)
-        {
-
-            return Results.Problem(ex.Message);
-        }
-    }
-
-    private static async Task<IResult> GetUser(Guid userId, IUserData data)
-    {
-        try
-        {
-            var results = await data.GetUser(userId);
-            if(results == null) return Results.NotFound();
-            return Results.Ok(results);
-        }
-        catch (Exception ex)
-        {
-
-            return Results.Problem(ex.Message);
-        }
-    }
-
-    private static async Task<IResult> InsertUser(UserModel user, IUserData data)
-    {
-        try
-        {
-            await data.InsertUser(user);
-            return Results.Ok();
-        }
-        catch (Exception ex)
-        {
-
-            return Results.Problem(ex.Message);
-        }
-    }
-
-    private static async Task<IResult> UpdateUser(UserModel user, IUserData data)
-    {
-        try
-        {
-            await data.UpdateUser(user);
-            return Results.Ok();
-        }
-        catch (Exception ex)
-        {
-
-            return Results.Problem(ex.Message);
-        }
-    }
-
-    private static async Task<IResult> DeleteUser(Guid userId, IUserData data)
-    {
-        try
-        {
-            await data.DeleteUser(userId);
-            return Results.Ok();
-        }
-        catch (Exception ex)
-        {
-
-            return Results.Problem(ex.Message);
-        }
-    }
+        // User - API
+        app.MapGet("/Users", UserAPI.GetUsers);
+        app.MapGet("/User/{userId}", UserAPI.GetUser);
+        app.MapPost("/Users", UserAPI.InsertUser);
+        app.MapPut("/Users", UserAPI.UpdateUser);
+        app.MapDelete("/Users", UserAPI.DeleteUser);
+        // Auth - API
+        app.MapPost("/Auth/Register", AuthAPI.RegisterUser);
+        app.MapPost("/Auth/Login", AuthAPI.LoginUser);
+        app.MapPost("/Auth/Logout", AuthAPI.LogoutUser);
+        app.MapGet("/Auth/User", AuthAPI.User);       
+    }  
 }
 

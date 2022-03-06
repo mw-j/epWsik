@@ -1,10 +1,5 @@
 ﻿using epDataAccess.DbAccess;
 using epDataAccess.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace epDataAccess.Data
 {
@@ -23,14 +18,23 @@ namespace epDataAccess.Data
         public async Task<UserModel?> GetUser(Guid userId)
         {
             var results = await _db.LoadData<UserModel, dynamic>(
-                "dbo.sp_User_Get",
+                "dbo.sp_User_GetByUserId",
                 new { userId });
 
             return results.FirstOrDefault();
         }
 
+        public async Task<UserModel?> GetUserByEmail(string email)
+        {
+            var results = await _db.LoadData<UserModel, dynamic>(
+                "dbo.sp_User_GetByEmail",
+                new { email });
+
+            return results.FirstOrDefault();
+        }
+
         public Task InsertUser(UserModel user) =>
-            _db.SaveData("dbo.sp_User_Insert", new { user.FirstName, user.LastName });
+            _db.SaveData("dbo.sp_User_Insert", new { user.FirstName, user.LastName, user.Email, user.Password });
 
         public Task UpdateUser(UserModel user) =>
             _db.SaveData("dbo.sp_User_Update", user);
