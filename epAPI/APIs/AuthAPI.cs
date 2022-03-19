@@ -1,6 +1,8 @@
 ﻿using epAPI.DTOs;
 using epAPI.Helpers;
 using System.Data.SqlClient;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 
 namespace epAPI.APIs
 {
@@ -43,6 +45,7 @@ namespace epAPI.APIs
 
         internal static async Task<IResult> LoginUser(UserLoginDTO dto, HttpContext http, IUserData data)
         {
+            UserLoginResponseDTO userLoginResponseDTO = new UserLoginResponseDTO();
             try
             {
                 UserModel? user = await data.GetUserByEmail(dto.Email);
@@ -51,15 +54,22 @@ namespace epAPI.APIs
                     return Results.BadRequest("Invalid Credentials");
                 }
 
-                var jwt = _jwtService.Generate(user.UserId);
+                string jwt = await _jwtService.Generate(user.UserId, data);
+                userLoginResponseDTO.jwtToken = jwt;
+                userLoginResponseDTO.userDTO = new UserDTO
+                {
+                    UserId = user.UserId,
+                    Email = user.Email,
+                    FirstName = user.FirstName,
+                    LastName = user.LastName
+                };
 
                 http.Response.Cookies.Append("jwt", jwt, new CookieOptions { HttpOnly = true});
                 
-                return Results.Ok(user);
+                return Results.Ok(userLoginResponseDTO);
             }
             catch (Exception ex)
             {
-
                 return Results.Problem(ex.Message);
             }
         }
@@ -74,13 +84,30 @@ namespace epAPI.APIs
             try
             {
                 string? jwt = http.Request.Cookies["jwt"];
+                if (jwt == null) {
+                    string jwt_bearer = http.Request.Headers.Authorization.Where(s => s.StartsWith("Bearer")).FirstOrDefault("");
+                    if (jwt_bearer != "Bearer null") {
+                        jwt = jwt_bearer[7..];
+                    }
+                    else {
+                        return Results.Unauthorized();
+                    }    
+                };
                 if (jwt != null) {
                     var token = _jwtService.Verify(jwt);
-                    Guid userId = Guid.Parse(token.Issuer);
+                    Guid userId = Guid.Parse(token.Claims.Where(c => c.Type == JwtRegisteredClaimNames.NameId).Select(c => c.Value).SingleOrDefault(""));
 
                     var results = await data.GetUser(userId);
                     if (results == null) return Results.NotFound();
-                    return Results.Ok(results);
+                    UserDTO userDTO = new UserDTO
+                    {
+                        UserId = results.UserId,
+                        Email = results.Email,
+                        FirstName = results.FirstName,
+                        LastName = results.LastName,
+
+                    };
+                    return Results.Ok(userDTO);
 
                 }
 

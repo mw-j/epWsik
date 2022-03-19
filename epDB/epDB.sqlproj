@@ -68,11 +68,15 @@
     <Build Include="dbo\StoredProcedures\sp_User_Insert.sql" />
     <Build Include="dbo\StoredProcedures\sp_User_Update.sql" />
     <Build Include="dbo\StoredProcedures\sp_User_GetByEmail.sql" />
+    <Build Include="dbo\Tables\Recipe.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Script.PostDeployment.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="epDB.publish.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <RefactorLog Include="epDB.refactorlog" />
   </ItemGroup>
 </Project>

@@ -1,12 +1,20 @@
 using epAPI;
 using epDataAccess.DbAccess;
-using Microsoft.AspNetCore.Cors.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddCors();
+builder.Services.AddCors(
+        opt => {
+            opt.AddPolicy(name: "CORSPolicy", builder => {
+                builder
+                .WithOrigins("http://localhost:8080", "http://localhost:8081", "https://localhost:8080", "https://localhost:8081")
+                .AllowAnyMethod()
+                .AllowAnyHeader();
+            });
+        }
+    );
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddSingleton<ISqlDataAccess, SqlDataAccess>();
@@ -22,11 +30,13 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.UseCors("CORSPolicy");
 
 app.ConfigureApi();
 
-app.UseCors(options => options
-    .WithOrigins(new[] { "http://localhost:3000"})
-    .AllowAnyHeader().AllowAnyMethod().AllowCredentials());
+//app.UseCors(options => options
+//    .AllowAnyOrigin()
+//    //.WithOrigins(new[] { "http://localhost:8081", "https://localhost:8080", "http://localhost:*" })
+//    .AllowAnyHeader().AllowAnyMethod()); //.AllowCredentials()); ;
 
 app.Run();
