@@ -59,16 +59,31 @@
     <Folder Include="dbo" />
     <Folder Include="dbo\Tables" />
     <Folder Include="dbo\StoredProcedures" />
+    <Folder Include="dbo\StoredProcedures\Ingredient" />
+    <Folder Include="dbo\StoredProcedures\User" />
+    <Folder Include="dbo\StoredProcedures\Recipe" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="dbo\Tables\User.sql" />
-    <Build Include="dbo\StoredProcedures\sp_User_GetAll.sql" />
-    <Build Include="dbo\StoredProcedures\sp_User_GetByUserId.sql" />
-    <Build Include="dbo\StoredProcedures\sp_User_Delete.sql" />
-    <Build Include="dbo\StoredProcedures\sp_User_Insert.sql" />
-    <Build Include="dbo\StoredProcedures\sp_User_Update.sql" />
-    <Build Include="dbo\StoredProcedures\sp_User_GetByEmail.sql" />
     <Build Include="dbo\Tables\Recipe.sql" />
+    <Build Include="dbo\Tables\Ingredient.sql" />
+    <Build Include="dbo\Tables\Language.sql" />
+    <Build Include="dbo\Tables\Ingredient_Translation.sql" />
+    <Build Include="dbo\Tables\Mapping_Recipe_Ingredient.sql" />
+    <Build Include="dbo\StoredProcedures\sp_map_Recipe_Ingredient_Insert.sql" />
+    <Build Include="dbo\StoredProcedures\Ingredient\sp_Ingredient_Delete.sql" />
+    <Build Include="dbo\StoredProcedures\Ingredient\sp_Ingredient_GetAll.sql" />
+    <Build Include="dbo\StoredProcedures\Ingredient\sp_Ingredient_GetByIngredientId.sql" />
+    <Build Include="dbo\StoredProcedures\Ingredient\sp_Ingredient_Insert.sql" />
+    <Build Include="dbo\StoredProcedures\Ingredient\sp_Ingredient_Update.sql" />
+    <Build Include="dbo\StoredProcedures\User\sp_User_Delete.sql" />
+    <Build Include="dbo\StoredProcedures\User\sp_User_GetAll.sql" />
+    <Build Include="dbo\StoredProcedures\User\sp_User_GetByEmail.sql" />
+    <Build Include="dbo\StoredProcedures\User\sp_User_GetByUserId.sql" />
+    <Build Include="dbo\StoredProcedures\User\sp_User_Insert.sql" />
+    <Build Include="dbo\StoredProcedures\User\sp_User_Update.sql" />
+    <Build Include="dbo\StoredProcedures\Recipe\sp_Recipe_Insert.sql" />
+    <Build Include="dbo\StoredProcedures\Recipe\sp_Recipe_GetRecipes.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Script.PostDeployment.sql" />

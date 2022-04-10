@@ -16,7 +16,12 @@ public static class Api
         app.MapPost("/Auth/Register", AuthAPI.RegisterUser);
         app.MapPost("/Auth/Login", AuthAPI.LoginUser);
         app.MapPost("/Auth/Logout", AuthAPI.LogoutUser);
-        app.MapGet("/Auth/User", AuthAPI.User);       
-    }  
+        app.MapGet("/Auth/User", AuthAPI.User);
+        // Recupie - API
+        app.MapGet("/Recipes", RecipeAPI.GetRecipes);
+
+        // Ingredient - API
+        app.MapGet("/Ingredients", IngredientAPI.GetIngredients);
+    }
 }
 
